@@ -1,8 +1,2 @@
-tic\ tac/package-lock.json
-tic\ tac/node_modules/
-
-reactdev-forked/package.json
-reactdev-forked/package-lock.json
 reactdev-forked/node_modules/
 
-*.json
