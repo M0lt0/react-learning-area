@@ -2,10 +2,12 @@ import { useState } from 'react'
 
 function Square({ value, onSquareClick }) {
 
-  return <button className="square" onClick={onSquareClick}> {value} </button>
+  return (<button className="square" onClick={onSquareClick}>
+    {value}
+  </button>)
 
 }
-function Board([xIsNext, squares, onPlay]) {
+function Board({ xIsNext, squares, onPlay }) {
 
   function handelClick(i) {
     if (calculateWinner(squares) || squares[i]) {
@@ -66,15 +68,17 @@ function calculateWinner(squares) {
     [2, 5, 8],
     [0, 4, 8],
     [2, 4, 6]
-
   ]
+
   for (let n = 0; n < lines.length; n++) {
     const [a, b, c] = lines[n]
     if (squares[a] && squares[a] === squares[b] && squares[a] === squares[c]) {
       return squares[a]
     }
   }
+
   return null
+
 }
 
 export default function Game() {
@@ -86,6 +90,24 @@ export default function Game() {
     setHistory([...history, nextSquares])
     setXIsNext(!xIsNext)
   }
+
+  function jumper(nextMove) {
+
+  }
+
+  const moves = history.map((squares, move) => {
+    let description
+    if (move > 0) {
+      description = 'go to move #' + move
+    } else {
+      description = 'go to game start'
+    }
+    return (
+      <li>
+        <button onClick={() => jumper(move)}></button>
+      </li>
+    )
+  })
   return (
     <div className='game'>
       <div className="game-board">
