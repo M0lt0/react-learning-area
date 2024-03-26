@@ -82,17 +82,19 @@ function calculateWinner(squares) {
 }
 
 export default function Game() {
-  const [xIsNext, setXIsNext] = useState(true)
   const [history, setHistory] = useState([Array(9).fill(null)])
-  const currentSquares = history[history.length - 1]
+  const [currentMove, setCurrentMove] = useState(0)
+  const xIsNext = currentMove % 2 === 0
+  const currentSquares = history[currentMove]
 
   function handlePlay(nextSquares) {
-    setHistory([...history, nextSquares])
-    setXIsNext(!xIsNext)
+    const nextHistory = [...history.slice(0, currentMove + 1), nextSquares]
+    setHistory(nextHistory)
+    setCurrentMove(nextHistory.length - 1)
   }
 
   function jumper(nextMove) {
-
+    setCurrentMove(nextMove)
   }
 
   const moves = history.map((squares, move) => {
@@ -103,8 +105,8 @@ export default function Game() {
       description = 'go to game start'
     }
     return (
-      <li>
-        <button onClick={() => jumper(move)}></button>
+      <li key={move}>
+        <button onClick={() => jumper(move)}>{description}</button>
       </li>
     )
   })
@@ -115,9 +117,15 @@ export default function Game() {
       </div>
       <div className="game-info">
         <ol>
-          {/*time traveler */}
+          {moves}
         </ol>
       </div>
     </div>
   )
 }
+
+/** For the current move only, show “You are at move #…” instead of a button.
+Rewrite Board to use two loops to make the squares instead of hardcoding them.
+Add a toggle button that lets you sort the moves in either ascending or descending order.
+When someone wins, highlight the three squares that caused the win (and when no one wins, display a message about the result being a draw).
+Display the location for each move in the format (row, col) in the move history list.*/
