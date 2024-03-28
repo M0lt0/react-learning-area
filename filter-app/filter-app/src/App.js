@@ -1,3 +1,17 @@
+import { useState } from 'react'
+
+function FilterProductTable({ products }) {
+  const [filterText, setFilterText] = useState('')
+  const [isStockOnly, setIsStockOnly] = useState(false)
+  return (
+    <div>
+      <SearchBar filterText={filterText} isStockOnly={isStockOnly} onFilterTextChange={setFilterText} onIsStockOnlyChange={setIsStockOnly} />
+      <ProductTable products={products} filterText={filterText} isStockOnly={isStockOnly} />
+    </div>
+  )
+
+}
+
 function ProductCategoryRow({ category }) {
   return (
     <tr>
@@ -23,12 +37,20 @@ function ProductRow({ product }) {
   )
 }
 
-function ProductTable({ products }) {
+function ProductTable({ products, filterText, isStockOnly }) {
   const rows = []
   let lastCategory = null
 
   products.forEach((product) => {
+
+    if (product.name.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
+      return
+    }
+    if (isStockOnly && !product.stocked) {
+      return
+    }
     if (product.category !== lastCategory) {
+
       rows.push(
         <ProductCategoryRow
           category={product.category}
@@ -43,6 +65,7 @@ function ProductTable({ products }) {
 
     lastCategory = product.category
   })
+
   return (
     <table>
       <thead>
@@ -56,12 +79,12 @@ function ProductTable({ products }) {
   )
 }
 
-function SearchBar() {
+function SearchBar({ filterText, isStockOnly, onFilterTextChange, onIsStockOnlyChange }) {
   return (
     <form>
-      <input type="text" placeholder="search..." />
+      <input type="text" placeholder="search..." value={filterText} onChange={(e) => onFilterTextChange(e.target.value)} />
       <label >
-        <input type="checkbox" />
+        <input type="checkbox" checked={isStockOnly} onChange={(e) => onIsStockOnlyChange(e.target.checked)} />
         {' '}
         only show product in stock
       </label>
@@ -70,15 +93,8 @@ function SearchBar() {
 
 }
 
-function FilterProductTable({ products }) {
-  return (
-    <div>
-      <SearchBar />
-      <ProductTable products={products} />
-    </div>
-  )
 
-}
+
 
 const PRODUCTS = [
   { category: "Fruits", price: "$1", stocked: true, name: "Apple" },
