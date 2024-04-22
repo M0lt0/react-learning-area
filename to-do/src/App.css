@@ -1,5 +1,53 @@
+.App {
+  width: 400px;
+  height: auto;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid purple;
+  margin: 100px auto;
+  justify-content: space-around;
+  padding: 20px;
+  border-radius: 10px;
+  background-color: #ff004843;
+
+}
+
+h2 {
+  text-align: center;
+}
+
+input {
+  border: 1px solid red;
+  padding: 10px;
+  margin-bottom: 15px;
+}
+
+input:focus {
+  outline: 1px solid red;
+}
+
+button {
+  border-radius: 50px;
+  outline: none;
+  border: none;
+  cursor: pointer;
+  background-color: #2b00ff3b;
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 30px;
+  letter-spacing: 1px;
+
+}
+
+.container {
+
+  display: flex;
+}
+
 .container .item {
   cursor: pointer;
+
 }
 
 .done {
@@ -21,6 +69,8 @@
 }
 
 li {
-  list-style: '&@&';
-  text-indent: 10px;
+  list-style: '&';
+  text-indent: 2px;
+  max-width: 280px;
+  word-wrap: break-word;
 }
